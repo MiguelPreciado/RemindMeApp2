@@ -29,7 +29,7 @@ export default class TaskScreen extends Component {
     return (
       <View style={ styles.container }>
         <View style={ styles.headerContainer }>
-          <Image style={styles.userAvatar} source={import('./../images/user-avatar.png')}/>
+          <Image style={styles.userAvatar} source={require('./../images/user-avatar.png')}/>
           <Text style={styles.pendingTasksText}>6 Pendientes</Text>
           <Text style={styles.dateText}>SÁBADO 27 DE ENERO 2018</Text>
         </View>
