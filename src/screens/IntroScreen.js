@@ -39,9 +39,9 @@ export default class IntroScreen extends Component<Props> {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flex: 1,//crecer hasta el tope
+    alignItems: 'center', //eje secundario y
+    justifyContent: 'space-between',//eje principal x
     backgroundColor: 'rgb(237,24,74)'
   },
   logo: {
