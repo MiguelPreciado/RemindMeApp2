@@ -8,11 +8,14 @@ import {
   Text,
   Image,
   StyleSheet,
-  ScrollView
+  ScrollView,
+  TouchableHighlight,
+  Modal
 } from 'react-native';
 
 import TasksHeader from './../components/TasksHeader';
 import Task from './../components/Task';
+import AddTaskModal from './../modals/AddTaskModal';
 
 export default class TaskScreen extends Component {
 
@@ -31,18 +34,28 @@ export default class TaskScreen extends Component {
         { id: 8, title:'Fiesta', completed: false },
         { id: 9, title:'Leche', completed: false },
         { id: 10, title:'Basura', completed: false },
-        { id: 11, title:'Platos', completed: false },
-        { id: 12, title:'Fiesta', completed: false },
-        { id: 13, title:'Leche', completed: false },
-        { id: 14, title:'Basura', completed: false },
-        { id: 15, title:'Platos', completed: false },
-        { id: 16, title:'Fiesta', completed: false },
-      ]
+        { id: 11, title:'Platos', completed: false }
+      ],
+      modalVisible: false
     }
   }
 
-  addTask(){
+  showModal(){
+    this.setState( {modalVisible: true})
+  }
 
+  hideModal(){
+    this.setState( {modalVisible: false})
+  }
+
+  addTask(title){
+    //Generar ID ¡Mala practica!
+    const id = 100 + this.state.tasks.leght;
+    const newTask = { id, title, completed: false};
+    let tasks = [...this.state.tasks];
+    tasks.push(newTask);
+    this.setState({ tasks });
+    this.hideModal();
   }
 
   calculateTaskToBeCompleted(){
@@ -87,6 +100,18 @@ export default class TaskScreen extends Component {
         <ScrollView style={ styles.tasksContainer }>
           { this.renderTasks() }
         </ScrollView>
+        <TouchableHighlight style={styles.addTaskButton} onPress={ () => {this.showModal()} }>
+          <Image style={styles.plusIcon} source={require('./../images/icon-plus.png')}/>
+        </TouchableHighlight>
+        <Modal
+          animationType="slide"
+          transparent={ true }
+          onRequestClose= { () => { this.hideModal() }}
+          visible={this.state.modalVisible}>
+          <AddTaskModal
+            addTask={this.addTask.bind(this)}
+            hideModal={this.hideModal.bind(this)}/>
+        </Modal>
       </View>
     )
   }
@@ -99,5 +124,20 @@ const styles = StyleSheet.create({
   tasksContainer: {
     backgroundColor: 'white',
     flex: 1
+  },
+  addTaskButton:{
+    backgroundColor: 'rgb(237,24,74)',
+    width: 66,
+    height: 66,
+    borderRadius:33,
+    position: 'absolute',
+    bottom: 20,
+    right: 15,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  plusIcon: {
+    width:30,
+    height:30
   }
 });
